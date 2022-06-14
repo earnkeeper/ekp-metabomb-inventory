@@ -1,31 +1,15 @@
 from decouple import AutoConfig
 from ekp_sdk import BaseContainer
 
-
-from app.features.embed_best_daily_returns.embed_best_daily_returns_controller import EmbedBestDailyReturnsController
-from app.features.embed_best_daily_returns.embed_best_daily_returns_service import EmbedBestDailyReturnService
-from app.features.embed_box_floor.embed_box_floor_controller import EmbedBoxFloorController
-from app.features.boxes_market.history.boxes_history_service import \
-    BoxesHistoryService
-from app.features.boxes_market.listings.boxes_listings_service import \
-    BoxesListingsService
-from app.features.heroes_market.history.heroes_history_service import HeroesHistoryService
-from app.features.heroes_market.listings.heroes_listings_service import HeroListingsService
 from app.features.inventory.player.inventory_controller import InventoryController
 from app.features.inventory.player.inventory_service import InventoryService
 from app.features.inventory.players.players_controller import InventoryPlayersController
 from app.features.inventory.players.players_service import InventoryPlayersService
 
-from db.box_listing_timestamp_repo import BoxListingTimestampRepo
-from db.market_sales_repo import MarketSalesRepo
-from db.hero_listing_timestamp_repo import HeroListingTimestampRepo
 from shared.mapper_service import MapperService
 from shared.metabomb_api_service import MetabombApiService
 from shared.metabomb_coingecko_service import MetabombCoingeckoService
 from shared.metabomb_moralis_service import MetabombMoralisService
-from app.features.embed_box_floor.embed_box_floor_service import EmbedBoxesService
-from app.features.embed_hero_floor.embed_hero_floor_service import EmbedHeroesService
-from app.features.embed_hero_floor.embed_hero_floor_controller import EmbedHeroesFloorController
 
 class AppContainer(BaseContainer):
     def __init__(self):
@@ -51,47 +35,6 @@ class AppContainer(BaseContainer):
             cache_service=self.cache_service,
             moralis_api_service=self.moralis_api_service
         )
-        # DB
-
-        self.market_sales_repo = MarketSalesRepo(
-            mg_client=self.mg_client,
-        )
-
-        self.hero_listing_timestamp_repo = HeroListingTimestampRepo(
-            mg_client=self.mg_client
-        )
-
-        # FEATURES - BOXES MARKET
-
-        self.box_listing_timestamp_repo = BoxListingTimestampRepo(
-            mg_client=self.mg_client
-        )
-
-        self.boxes_listings_service = BoxesListingsService(
-            metabomb_coingecko_service=self.metabomb_coingecko_service,
-            metabomb_api_service=self.metabomb_api_service,
-            box_listing_timestamp_repo=self.box_listing_timestamp_repo
-        )
-
-        self.boxes_history_service = BoxesHistoryService(
-            market_sales_repo=self.market_sales_repo,
-            metabomb_coingecko_service=self.metabomb_coingecko_service
-        )
-
-        # FEATURES - HEROES MARKET
-        self.heroes_listings_service = HeroListingsService(
-            metabomb_coingecko_service=self.metabomb_coingecko_service,
-            metabomb_api_service=self.metabomb_api_service,
-            mapper_service=self.mapper_service,
-            hero_listing_timestamp_repo=self.hero_listing_timestamp_repo
-        )
-
-        self.heroes_history_service = HeroesHistoryService(
-            market_sales_repo=self.market_sales_repo,
-            metabomb_coingecko_service=self.metabomb_coingecko_service,
-            mapper_service=self.mapper_service
-        )
-
 
         # FEATURES - INVENTORY - PLAYERS
 
@@ -120,35 +63,6 @@ class AppContainer(BaseContainer):
             client_service=self.client_service,
             inventory_service=self.inventory_service
         )
-        
-        # FEATURES - BOX FLOOR EMBED
-
-        self.embed_boxes_service = EmbedBoxesService()
-        
-        self.embed_box_floor_controller = EmbedBoxFloorController(
-            client_service=self.client_service,
-            boxes_history_service=self.boxes_history_service,
-            boxes_listings_service=self.boxes_listings_service,
-            embed_boxes_service=self.embed_boxes_service
-        )
-
-        self.embed_heroes_service = EmbedHeroesService()
-
-        self.embed_heroes_floor_controller = EmbedHeroesFloorController(
-            client_service=self.client_service,
-            embed_heroes_service=self.embed_heroes_service,
-            heroes_history_service=self.heroes_history_service,
-            heroes_listings_service=self.heroes_listings_service
-        )
-
-        self.embed_best_daily_returns_service = EmbedBestDailyReturnService()
-
-        self.embed_best_daily_returns_controller = EmbedBestDailyReturnsController(
-            client_service=self.client_service,
-            embed_best_daily_return_service=self.embed_best_daily_returns_service,
-            heroes_history_service=self.heroes_history_service,
-            heroes_listings_service=self.heroes_listings_service
-        )
 
 
 if __name__ == '__main__':
@@ -162,8 +76,4 @@ if __name__ == '__main__':
         container.inventory_controller
     )
     
-    # container.client_service.add_controller(container.embed_box_floor_controller)
-    # container.client_service.add_controller(container.embed_heroes_floor_controller)
-    # container.client_service.add_controller(container.embed_best_daily_returns_controller)
-
     container.client_service.listen()

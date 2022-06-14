@@ -4,7 +4,7 @@
   "name": "Inventory",
   "github": "https://github.com/earnkeeper/ekp-metabomb-inventory",
   "image": "/static/market.jpg",
-  "mainPage": "inventory",
+  "mainPage": "players",
   "description": "View your current Metabomb position, NFTs, MTB value and more",
   "features": ["Enhanced Inventory"]
 }
