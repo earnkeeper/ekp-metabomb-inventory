@@ -189,6 +189,8 @@ class InventoryService:
             if price:
                 price_fiat = price * mtb_rate
 
+            print(float(balance_mtb))
+            print(float(balance_mtb) * mtb_rate)
             document = {
                 "id": token_id,
                 "updated": datetime.now().timestamp(),

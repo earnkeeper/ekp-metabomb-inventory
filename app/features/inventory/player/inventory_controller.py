@@ -1,4 +1,3 @@
-from app.features.dashboard.dashboard_opens_service import DashboardOpensService
 from app.features.inventory.player.inventory_page import page
 from ekp_sdk.services import ClientService
 from ekp_sdk.util import client_currency, client_path
