@@ -16,14 +16,9 @@ from app.features.inventory.player.inventory_service import InventoryService
 from app.features.inventory.players.players_controller import InventoryPlayersController
 from app.features.inventory.players.players_service import InventoryPlayersService
 
-from db.activity_repo import ActivityRepo
-from db.bomb_listing_timestamp_repo import BombListingTimestampRepo
-from db.bombs_sales_repo import BombsSalesRepo
 from db.box_listing_timestamp_repo import BoxListingTimestampRepo
-from db.box_opens_repo import BoxOpensRepo
 from db.market_sales_repo import MarketSalesRepo
 from db.hero_listing_timestamp_repo import HeroListingTimestampRepo
-from shared.hero_floor_price_service import HeroFloorPriceService
 from shared.mapper_service import MapperService
 from shared.metabomb_api_service import MetabombApiService
 from shared.metabomb_coingecko_service import MetabombCoingeckoService
