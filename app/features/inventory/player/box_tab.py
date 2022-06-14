@@ -12,11 +12,13 @@ def box_tab(BOXES_COLLECTION_NAME):
             Datatable(
                 data=documents(BOXES_COLLECTION_NAME),
                 busy_when=is_busy(collection(BOXES_COLLECTION_NAME)),
+                default_sort_field_id="id",
                 columns=[
                     Column(
                         id="id",
                         title="Token Id",
-                        width="100px"
+                        width="100px",
+                        sortable=True
                     ),
                     Column(
                         id="name",
@@ -37,7 +39,6 @@ def box_tab(BOXES_COLLECTION_NAME):
                             "$.price_fiat", "$.fiat_symbol"),
                         width="120px",
                         right=True,
-                        sortable=True,
                     ),
                 ]
             )

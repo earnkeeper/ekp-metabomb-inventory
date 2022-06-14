@@ -13,6 +13,7 @@ def hero_tab(HEROES_COLLECTION_NAME):
             Datatable(
                 data=documents(HEROES_COLLECTION_NAME),
                 busy_when=is_busy(collection(HEROES_COLLECTION_NAME)),
+                default_sort_field_id="id",
                 on_row_clicked=navigate(
                     format_template("https://market.metabomb.io/hero/{{ token_id }}", {
                         "token_id": "$.id"
@@ -24,7 +25,8 @@ def hero_tab(HEROES_COLLECTION_NAME):
                     Column(
                         id="id",
                         title="Token Id",
-                        width="100px"
+                        width="100px",
+                        sortable=True,
                     ),
                     Column(
                         id="name",
@@ -46,7 +48,6 @@ def hero_tab(HEROES_COLLECTION_NAME):
                             "$.price_fiat", "$.fiat_symbol"),
                         width="120px",
                         right=True,
-                        sortable=True,
                     ),
                     Column(
                         id="mtb_per_day",
@@ -69,14 +70,12 @@ def hero_tab(HEROES_COLLECTION_NAME):
                         format=format_percent("$.est_roi"),
                         width="100px",
                         right=True,
-                        sortable=True,
                     ),
                     Column(
                         id="hero_class",
                         title="Class",
                         cell=class_image(),
                         width="120px",
-                        sortable=True,
                     ),
                     Column(
                         id="hero_power",
@@ -94,7 +93,6 @@ def hero_tab(HEROES_COLLECTION_NAME):
                                        attr_name='hero_health'),
                         width="80px",
                         right=True,
-                        sortable=True,
                     ),
                     Column(
                         id="hero_speed",
@@ -103,7 +101,6 @@ def hero_tab(HEROES_COLLECTION_NAME):
                                        attr_name='hero_speed'),
                         width="80px",
                         right=True,
-                        sortable=True,
                     ),
                     Column(
                         id="hero_stamina",
@@ -112,7 +109,6 @@ def hero_tab(HEROES_COLLECTION_NAME):
                                        attr_name='hero_stamina'),
                         width="90px",
                         right=True,
-                        sortable=True,
                     ),
                     Column(
                         id="hero_bomb_num",
@@ -121,7 +117,6 @@ def hero_tab(HEROES_COLLECTION_NAME):
                                        attr_name='hero_bomb_num'),
                         width="80px",
                         right=True,
-                        sortable=True,
                     ),
                     Column(
                         id="hero_bomb_range",
@@ -130,7 +125,6 @@ def hero_tab(HEROES_COLLECTION_NAME):
                                        attr_name='hero_bomb_range'),
                         width="80px",
                         right=True,
-                        sortable=True,
                     ),
                     Column(
                         id="spacer",

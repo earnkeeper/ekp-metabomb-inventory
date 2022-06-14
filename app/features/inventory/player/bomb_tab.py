@@ -12,6 +12,7 @@ def bomb_tab(BOMBS_COLLECTION_NAME):
             Datatable(
                 data=documents(BOMBS_COLLECTION_NAME),
                 busy_when=is_busy(collection(BOMBS_COLLECTION_NAME)),
+                default_sort_field_id="id",
                 on_row_clicked=navigate(
                     format_template("https://market.metabomb.io/bomb/{{ token_id }}", {
                         "token_id": "$.id"
@@ -23,7 +24,8 @@ def bomb_tab(BOMBS_COLLECTION_NAME):
                     Column(
                         id="id",
                         title="Token Id",
-                        width="100px"
+                        width="100px",
+                        sortable=True
                     ),
                     Column(
                         id="name",
@@ -44,14 +46,12 @@ def bomb_tab(BOMBS_COLLECTION_NAME):
                             "$.price_fiat", "$.fiat_symbol"
                         ),
                         width="120px",
-                        sortable=True,
                     ),
                     Column(
                         id="skills",
                         title="Skills",
                         cell=skills_cell(),
                         min_width="200px",
-                        # right=True
                     ),
                     Column(
                         id="spacer",
