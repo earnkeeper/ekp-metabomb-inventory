@@ -8,7 +8,7 @@ from ekp_sdk.ui import Card, Chart, Col, Container, Image, Row, Span, Tabs, Tab,
 from app.utils.summary_card import summary_card
 
 
-def page(HEROES_COLLECTION_NAME, BOXES_COLLECTION_NAME, BOMBS_COLLECTION_NAME):
+def page(HEROES_COLLECTION_NAME, BOXES_COLLECTION_NAME, BOMBS_COLLECTION_NAME, BALANCE_COLLECTION_NAME):
     return Container(
         children=[
             Row(
@@ -50,7 +50,7 @@ def page(HEROES_COLLECTION_NAME, BOXES_COLLECTION_NAME, BOMBS_COLLECTION_NAME):
                 )
             ),
             Div([], "mt-1"),
-            summary_row(HEROES_COLLECTION_NAME, BOXES_COLLECTION_NAME, BOMBS_COLLECTION_NAME),
+            summary_row(HEROES_COLLECTION_NAME, BOXES_COLLECTION_NAME, BOMBS_COLLECTION_NAME, BALANCE_COLLECTION_NAME),
             Tabs(
                 [
                     Tab(
@@ -98,7 +98,7 @@ def page(HEROES_COLLECTION_NAME, BOXES_COLLECTION_NAME, BOMBS_COLLECTION_NAME):
     )
 
 
-def summary_row(HEROES_COLLECTION_NAME, BOXES_COLLECTION_NAME, BOMBS_COLLECTION_NAME):
+def summary_row(HEROES_COLLECTION_NAME, BOXES_COLLECTION_NAME, BOMBS_COLLECTION_NAME, BALANCE_COLLECTION_NAME):
     return Container(
         children=[
             Row([
@@ -165,10 +165,10 @@ def summary_row(HEROES_COLLECTION_NAME, BOXES_COLLECTION_NAME, BOMBS_COLLECTION_
                                 "{{ mtb_balance }} ({{ fiat_balance }} )",
                                 {
                                     "mtb_balance": format_currency(
-                                        f"$.{BOXES_COLLECTION_NAME}[0].balance_mtb"
+                                        f"$.{BALANCE_COLLECTION_NAME}[0].balance_mtb"
                                     , ""),
                                     "fiat_balance": format_currency(
-                                        f"$.{BOXES_COLLECTION_NAME}[0].balance_fiat"
+                                        f"$.{BALANCE_COLLECTION_NAME}[0].balance_fiat"
                                     , "$.fiat_symbol"),
                                 }
                             ),
