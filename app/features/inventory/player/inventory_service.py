@@ -114,7 +114,7 @@ class InventoryService:
 
             if token_id not in bomb_map:
                 continue
-            
+
             bomb = bomb_map[token_id]
             rarity = bomb["rarity"]
             rarity_name = self.mapper_service.BOMB_RARITY_TO_NAME[rarity]
@@ -169,8 +169,8 @@ class InventoryService:
 
         documents = []
 
-        balance = await self.metabomb_moralis_service.get_mtb_balance(address=address)
-        balance_mtb = Web3.fromWei(int(balance), 'ether')
+        # balance = await self.metabomb_moralis_service.get_mtb_balance(address=address)
+        # balance_mtb = Web3.fromWei(int(balance), 'ether')
 
         for box_nft in box_nfts:
 
@@ -189,6 +189,7 @@ class InventoryService:
             if price:
                 price_fiat = price * mtb_rate
 
+
             document = {
                 "id": token_id,
                 "updated": datetime.now().timestamp(),
@@ -196,10 +197,25 @@ class InventoryService:
                 "fiat_symbol": currency["symbol"],
                 "price": price,
                 "price_fiat": price_fiat,
-                "balance_mtb": float(balance_mtb),
-                "balance_fiat": float(balance_mtb) * mtb_rate,
+                # "balance_mtb": float(balance_mtb),
+                # "balance_fiat": float(balance_mtb) * mtb_rate,
             }
 
             documents.append(document)
 
         return documents
+
+    async def get_token_balance(self, address, currency):
+
+        mtb_rate = await self.metabomb_coingecko_service.get_mtb_price(currency["id"])
+
+        balance = await self.metabomb_moralis_service.get_mtb_balance(address=address)
+
+        balance_mtb = Web3.fromWei(int(balance), 'ether')
+
+        document = {
+            "balance_mtb": float(balance_mtb),
+            "balance_fiat": float(balance_mtb) * mtb_rate,
+        }
+
+        return [document]

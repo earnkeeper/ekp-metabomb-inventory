@@ -1,10 +1,10 @@
 {
-  "id": "metabomb-marketplace",
+  "id": "metabomb-inventory",
   "gameId": "metabomb",
-  "name": "Marketplace",
-  "github": "https://github.com/earnkeeper/ekp-metabomb-marketplace",
+  "name": "Inventory",
+  "github": "https://github.com/earnkeeper/ekp-metabomb-inventory",
   "image": "/static/market.jpg",
-  "mainPage": "heroes",
-  "description": "Preview the Enhanced Metabomb Marketplace before official release..",
-  "features": ["Enhanced Marketplace"]
+  "mainPage": "players",
+  "description": "View your current Metabomb position, NFTs, MTB value and more",
+  "features": ["Enhanced Inventory"]
 }

@@ -1,4 +1,3 @@
-from app.features.dashboard.dashboard_opens_service import DashboardOpensService
 from app.features.inventory.player.inventory_page import page
 from ekp_sdk.services import ClientService
 from ekp_sdk.util import client_currency, client_path
@@ -8,6 +7,7 @@ from app.features.inventory.player.inventory_service import InventoryService
 HEROES_COLLECTION_NAME = "metabomb_inventory_heroes"
 BOXES_COLLECTION_NAME = "metabomb_inventory_boxes"
 BOMBS_COLLECTION_NAME = "metabomb_inventory_bombs"
+BALANCE_COLLECTION_NAME = "metabomb_inventory_balance"
 
 class InventoryController:
     def __init__(
@@ -24,7 +24,7 @@ class InventoryController:
             sid,
             self.path,
             page(HEROES_COLLECTION_NAME, BOXES_COLLECTION_NAME,
-                 BOMBS_COLLECTION_NAME),
+                 BOMBS_COLLECTION_NAME, BALANCE_COLLECTION_NAME),
         )
 
     async def on_client_state_changed(self, sid, event):
@@ -37,6 +37,8 @@ class InventoryController:
         await self.client_service.emit_busy(sid, HEROES_COLLECTION_NAME)
         await self.client_service.emit_busy(sid, BOXES_COLLECTION_NAME)
         await self.client_service.emit_busy(sid, BOMBS_COLLECTION_NAME)
+        await self.client_service.emit_busy(sid, BALANCE_COLLECTION_NAME)
+
         currency = client_currency(event)
         
         address = path.replace("inventory/", "")
@@ -73,6 +75,14 @@ class InventoryController:
             sid,
             BOMBS_COLLECTION_NAME,
             bomb_documents
+        )
+
+        balance = await self.inventory_service.get_token_balance(address, currency)
+
+        await self.client_service.emit_documents(
+            sid,
+            BALANCE_COLLECTION_NAME,
+            balance
         )
 
         await self.client_service.emit_done(sid, BOMBS_COLLECTION_NAME)
