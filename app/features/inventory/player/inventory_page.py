@@ -3,7 +3,7 @@ from app.features.inventory.player.hero_tab import hero_tab
 from app.features.inventory.player.bomb_tab import bomb_tab
 from app.utils.page_title import page_title
 from ekp_sdk.ui import Card, Chart, Col, Container, Image, Row, Span, Tabs, Tab, count, sum, format_currency, Icon, \
-    Link, format_template, Div, format_mask_address
+    Link, format_template, Div, format_mask_address, navigate
 
 from app.utils.summary_card import summary_card
 
@@ -13,6 +13,12 @@ def page(HEROES_COLLECTION_NAME, BOXES_COLLECTION_NAME, BOMBS_COLLECTION_NAME, B
         children=[
             Row(
                 children=[
+                    Col(
+                        "col-auto my-auto pr-0",
+                        [
+                            Icon('chevron-left', size='lg',
+                                 on_click=navigate("players"))
+                        ]),
                     Col(
                         class_name='col-auto pr-0 my-auto',
                         children=[
